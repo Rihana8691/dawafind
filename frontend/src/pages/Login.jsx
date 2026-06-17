@@ -16,20 +16,24 @@ export default function Login() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+  e.preventDefault()
+  setError('')
+  setLoading(true)
 
-    try {
-      const res = await API.post('/auth/login', form)
-      login(res.data.user, res.data.token)
+  try {
+    const res = await API.post('/auth/login', form)
+    login(res.data.user, res.data.token)
+    if (res.data.user.role === 'admin') {
+      navigate('/admin')
+    } else {
       navigate('/search')
-    } catch (err) {
-      setError(err.response?.data?.error || 'Login failed. Please try again.')
-    } finally {
-      setLoading(false)
     }
+  } catch (err) {
+    setError(err.response?.data?.error || 'Login failed. Please try again.')
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">

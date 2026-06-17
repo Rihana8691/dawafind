@@ -39,5 +39,41 @@ const getPharmacyById = async (id) => {
   )
   return result.rows[0]
 }
+const getPendingPharmacies = async () => {
+  const result = await pool.query(
+    `SELECT id, name, address, phone, created_at 
+     FROM pharmacies 
+     WHERE is_approved = false 
+     ORDER BY created_at DESC`
+  )
+  return result.rows
+}
 
-module.exports = { createPharmacy, createPharmacyUser, findPharmacyUserByEmail, getPharmacyById }
+const approvePharmacy = async (id) => {
+  const result = await pool.query(
+    `UPDATE pharmacies SET is_approved = true 
+     WHERE id = $1 
+     RETURNING id, name, is_approved`,
+    [id]
+  )
+  return result.rows[0]
+}
+
+const getAllPharmacies = async () => {
+  const result = await pool.query(
+    `SELECT id, name, address, phone, is_approved, is_verified, created_at 
+     FROM pharmacies 
+     ORDER BY created_at DESC`
+  )
+  return result.rows
+}
+
+module.exports = { 
+  createPharmacy, 
+  createPharmacyUser, 
+  findPharmacyUserByEmail, 
+  getPharmacyById,
+  getPendingPharmacies,
+  approvePharmacy,
+  getAllPharmacies
+}

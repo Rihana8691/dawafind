@@ -27,10 +27,7 @@ export default function PharmacyDashboard() {
   const [barcodeInput, setBarcodeInput] = useState('')
   const barcodeRef = useRef(null)
 
-  useEffect(() => {
-    fetchInventory()
-    fetchLowStock()
-  }, [])
+  
 
   const fetchInventory = async () => {
     try {
@@ -51,7 +48,14 @@ export default function PharmacyDashboard() {
       console.error('Low stock fetch error')
     }
   }
-
+useEffect(() => {
+  const loadData = async () => {
+    await fetchInventory()
+    await fetchLowStock()
+    setLoading(false)
+  }
+  loadData()
+}, [])
   const searchDrug = async (q) => {
     setDrugSearch(q)
     if (q.length < 2) { setDrugResults([]); return }

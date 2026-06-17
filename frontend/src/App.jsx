@@ -7,6 +7,7 @@ import Register from './pages/Register'
 import Search from './pages/Search'
 import PharmacyLogin from './pages/PharmacyLogin'
 import PharmacyDashboard from './pages/PharmacyDashboard'
+import AdminDashboard from './pages/AdminDashboard'
 
 const ProtectedRoute = ({ children, role }) => {
   const { user, loading } = useAuth()
@@ -27,6 +28,11 @@ export default function App() {
       <Route path="/pharmacy/dashboard" element={
         <ProtectedRoute role="pharmacy">
           <PharmacyDashboard />
+        </ProtectedRoute>
+      } />
+      <Route path="/admin" element={
+        <ProtectedRoute role="admin">
+          <AdminDashboard />
         </ProtectedRoute>
       } />
     </Routes>

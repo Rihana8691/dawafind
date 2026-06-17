@@ -13,10 +13,12 @@ require('./config/db')
 const drugRoutes = require('./routes/drugRoutes')
 const authRoutes = require('./routes/authRoutes')
 const pharmacyRoutes = require('./routes/pharmacyRoutes')
+const adminRoutes = require('./routes/adminRoutes')
 
 app.use('/api/drugs', drugRoutes)
 app.use('/api/auth', authRoutes)
 app.use('/api/pharmacy', pharmacyRoutes)
+app.use('/api/admin', adminRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'DawaFind API is running' })
